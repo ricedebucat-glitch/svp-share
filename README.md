@@ -12,7 +12,8 @@
 ## 关于 .svp
 
 - `.svp` 是 **纯 JSON**（末尾可能有一个 `\x00`），可以直接用文本编辑器打开
-- 音符结构：`tracks[].mainGroup.notes[]`，字段 `lyrics` / `phonemes` / `onset` / `duration` / `pitch` / `detune`
+- 音符结构：音符常放在顶层的 `library[]`（每个元素是一个「音符组」），再由 `tracks[].groups[].groupID` 引用并给 `blickAbsoluteBegin` 定位；直接写在 `tracks[].mainGroup.notes[]` 里的也有，但很多导出（包括本仓库这两份）音符在 library 里。字段 `lyrics` / `phonemes` / `onset` / `duration` / `pitch` / `detune`
+- 动手改之前先确认 `mainRef.groupID` 指向的那组到底有没有音符——只塞 `library[]` 而不建 `tracks[].groups[]` 引用，SV2 打开就是空轨
 - 时间单位是 blick，1 拍 = 705,600,000 blick
 - 参数曲线：`pitchDelta`（音高偏差）、`vibratoEnv`（颤音包络）、`loudness`（响度）、`tension`（张力）、`breathiness`（气声）、`voicing`（发声）、`gender`（性别）、`toneShift`（音色偏移）
 
